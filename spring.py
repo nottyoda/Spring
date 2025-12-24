@@ -4,19 +4,35 @@ from tkinter import *
 
 
 #the code using symplectic euler
+#variables
+ls = 0
+rm = 0
+mass = 0
+#functions
+def springpos():
+    springattchvec= np.array([ls+rm,0])
+    return springattchvec
+
+def position(theta):
+    posvec= np.array([rm * np.cos(theta), rm * np.sin(theta)])
+    return posvec 
+
+def force(theta):
+    stretchvec = position(theta) - springpos()
+    stretchveclen = np.sqrt(strechvec.dot(stretchvec))
+    extension = stretchveclen - ls
+
+
+def alpha(theta, force, mass):
+
+
+
+
 def run():
     #variables
     ls = float(lengthspring.get()) #length of spring
     rm = float(radiusmass.get()) #radius of mass movement
     mass = float(massmass.get()) #mass of point mass
-
-    #functions
-    
-    #def force(theta):
-
-
-    #def alpha(theta, force, mass):
-
 
     #checking variables
     lengthspring.delete(0,END)
@@ -43,7 +59,7 @@ label = Label(window,
               bd=10,
               padx= 10,
               pady=20)
-
+label.pack()
 
 label_1 = Label(window,
                 text="Length of spring:",
