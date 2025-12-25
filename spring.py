@@ -24,6 +24,7 @@ def force(theta):
 
 
 def alpha(theta, force, mass):
+    forcevec[0]
 
 
 
@@ -32,7 +33,7 @@ def run():
     #variables
     ls = float(lengthspring.get()) #length of spring
     rm = float(radiusmass.get()) #radius of mass movement
-    mass = float(massmass.get()) #mass of point mass
+    m = float(massmass.get()) #mass of point mass
 
     #checking variables
     lengthspring.delete(0,END)
