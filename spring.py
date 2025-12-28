@@ -27,8 +27,8 @@ def force(theta): # outputs array
     return forcevec
 
 
-def alpha(theta, mass):
-    alpha = force(theta).dot(np.array([-1*np.sin(theta),np.cos(theta)])) * (1/(rm)) *(1/(mass))
+def alpha(theta):
+    alpha = force(theta).dot(np.array([-1*np.sin(theta),np.cos(theta)])) * (1/(rm)) *(1/(mass)) 
     return alpha 
 
 
@@ -38,13 +38,26 @@ def run():
     #variables
     ls = float(lengthspring.get()) #length of spring
     rm = float(radiusmass.get()) #radius of mass movement
-    m = float(massmass.get()) #mass of point mass
+    mass = float(massmass.get()) #mass of point mass
 
 
 
 
     #code goes here
+    h = 1 #stepsize
+    t = np.arange(0,1+h,h) #time
+    theta0 = 0 # initial condition
+    v = 0 # initial velocity 
 
+    theta = np.zeros(len(t)) # logging angular position
+    theta[0] = theta0 # setting the first term\
+
+    for i in range(0,len(t)-1):
+        v = v + alpha(theta[i]) * h 
+        theta[i+1] = theta[i] + v * h 
+    
+
+    # input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
 
 
 
