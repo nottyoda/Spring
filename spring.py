@@ -4,7 +4,7 @@ from matplotlib.backends.backend_tkagg import ( FigureCanvasTkAgg, NavigationToo
 from tkinter import *
 
 #the spring constant
-spring_constant = 1
+spring_constant = 10
 
 #the code using symplectic euler
 
@@ -26,7 +26,7 @@ def run():
         return posvec 
 
     def force(theta,ls,rm): # outputs array
-        stretchvec = position(theta,rm) - springpos(ls, rm)
+        stretchvec = springpos(ls, rm) - position(theta,rm) 
         stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
         extension = stretchveclen - ls
         forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
@@ -42,7 +42,8 @@ def run():
 
     #code goes here
     h = 0.01 #stepsize
-    t = np.arange(0,1+h,h) #time
+    tmax = 5 # max time
+    t = np.arange(0,tmax+h,h) #time
     theta0 = 0.2 # initial condition
     v = 0 # initial velocity 
 
