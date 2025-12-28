@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import ( FigureCanvasTkAgg, NavigationToolbar2Tk)
 from tkinter import *
 
 #the spring constant
@@ -56,6 +57,12 @@ def run():
         v = v + alpha(theta[i]) * h 
         theta[i+1] = theta[i] + v * h 
     
+    #showing plot
+    ax.plot(t, theta, 'g', label='model')
+    fig.suptitle('Angular displacement')
+    ax.set_xlabel('t')
+    ax.set_ylabel('θ')
+    ax.grid(True)
 
     # input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
     halfperiod = 0 #the halfperiod 
@@ -96,6 +103,8 @@ window.geometry("200x200")
 window.title("Bouncepadset")
 icon = PhotoImage(file='astro_card.png')
 window.iconphoto(True, icon)
+
+
 
 #stuff in the window
 label = Label(window,
@@ -153,12 +162,19 @@ period = Entry(window,
                  )
 period.pack()
 
+#the run button
+
 run_button = Button(window, 
                     text= "Run", 
                     font=("Arial", 50), 
                     command= run)
 run_button.pack()
 
+
+#the graph part
+fig, ax = plt.subplot()
+canvas = FigureCanvasTkAgg(fig, master = window)
+canvas.get_tk_widget().pack()
 
 
 window.mainloop()
