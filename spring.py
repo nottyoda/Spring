@@ -40,6 +40,24 @@ def run():
     rm = float(radiusmass.get()) #radius of mass movement
     m = float(massmass.get()) #mass of point mass
 
+
+
+
+    #code goes here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #checking variables
     lengthspring.delete(0,END)
     radiusmass.delete(0,END)
