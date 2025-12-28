@@ -66,7 +66,7 @@ def run():
             halfperiodnumber = halfperiodnumber + 1
     p = 2 * halfperiod/halfperiodnumber
 
-    period.delete(0,END)
+    period.delete(0,END) #displaying period 
     period.insert(0,p)
 
 
