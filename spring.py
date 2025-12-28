@@ -7,31 +7,6 @@ from tkinter import *
 spring_constant = 1
 
 #the code using symplectic euler
-#variables
-ls = 0
-rm = 0
-mass = 0
-#functions
-def springpos(): # outputs array
-    springattchvec= np.array([ls+rm,0])
-    return springattchvec
-
-def position(theta): # outputs array
-    posvec= np.array([rm * np.cos(theta), rm * np.sin(theta)])
-    return posvec 
-
-def force(theta): # outputs array
-    stretchvec = position(theta) - springpos()
-    stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
-    extension = stretchveclen - ls
-    forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
-    return forcevec
-
-
-def alpha(theta):
-    alpha = force(theta).dot(np.array([-1*np.sin(theta),np.cos(theta)])) * (1/(rm)) *(1/(mass)) 
-    return alpha 
-
 
 
 
@@ -41,24 +16,49 @@ def run():
     rm = float(radiusmass.get()) #radius of mass movement
     mass = float(massmass.get()) #mass of point mass
 
+    #functions
+    def springpos(ls, rm): # outputs array
+        springattchvec= np.array([ls+rm,0])
+        return springattchvec
+
+    def position(theta, rm): # outputs array
+        posvec= np.array([rm * np.cos(theta), rm * np.sin(theta)])
+        return posvec 
+
+    def force(theta,ls,rm): # outputs array
+        stretchvec = position(theta,rm) - springpos(ls, rm)
+        stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
+        extension = stretchveclen - ls
+        forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
+        return forcevec
+
+
+    def alpha(theta, ls, rm, mass):
+        alpha = force(theta, ls, rm).dot(np.array([-1*np.sin(theta),np.cos(theta)])) * (1/(rm)) *(1/(mass)) 
+        return alpha 
+
 
 
 
     #code goes here
-    h = 1 #stepsize
+    h = 0.01 #stepsize
     t = np.arange(0,1+h,h) #time
-    theta0 = 0 # initial condition
+    theta0 = 0.2 # initial condition
     v = 0 # initial velocity 
 
     theta = np.zeros(len(t)) # logging angular position
     theta[0] = theta0 # setting the first term\
 
     for i in range(0,len(t)-1):
-        v = v + alpha(theta[i]) * h 
+        v = v + alpha(theta[i],ls, rm, mass) * h 
         theta[i+1] = theta[i] + v * h 
+        #print(v)
+        #print(alpha(theta[i],ls, rm, mass))
     
+    print(theta)
+
     #showing plot
-    ax.plot(t, theta, 'g', label='model')
+    ax.plot(t, theta)
     fig.suptitle('Angular displacement')
     ax.set_xlabel('t')
     ax.set_ylabel('θ')
