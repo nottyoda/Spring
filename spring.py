@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import ( FigureCanvasTkAgg, NavigationToolbar2Tk)
 from tkinter import *
 
@@ -163,7 +163,7 @@ run_button.pack()
 
 
 #the graph part
-fig, ax = plt.subplot()
+fig, ax = plt.subplots()
 canvas = FigureCanvasTkAgg(fig, master = window)
 canvas.get_tk_widget().pack()
 
