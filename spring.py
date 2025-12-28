@@ -21,9 +21,11 @@ def force(theta):
     stretchvec = position(theta) - springpos()
     stretchveclen = np.sqrt(strechvec.dot(stretchvec))
     extension = stretchveclen - ls
+    forcevec = stretchvec * extension * (1/ stretchveclen)
+    return forcevec
 
 
-def alpha(theta, force, mass):
+def alpha(theta, forcevec, mass):
     forcevec[0]
 
 
