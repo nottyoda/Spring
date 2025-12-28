@@ -57,7 +57,7 @@ def run():
         theta[i+1] = theta[i] + v * h 
     
 
-# input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
+    # input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
     halfperiod = 0 #the halfperiod 
     halfperiodnumber = 0 
     for i in range(0,len(t)-1):
