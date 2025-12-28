@@ -23,7 +23,7 @@ def force(theta):
     stretchvec = position(theta) - springpos()
     stretchveclen = np.sqrt(strechvec.dot(stretchvec))
     extension = stretchveclen - ls
-    forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant 
+    forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
     return forcevec
 
 
