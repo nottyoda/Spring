@@ -57,8 +57,17 @@ def run():
         theta[i+1] = theta[i] + v * h 
     
 
-    # input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
+# input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
+    halfperiod = 0 #the halfperiod 
+    halfperiodnumber = 0 
+    for i in range(0,len(t)-1):
+        if (theta[i] - theta0)*(theta[i+1] - theta[0]) <= 0:
+            halfperiod = halfperiod + t[i]
+            halfperiodnumber = halfperiodnumber + 1
+    p = 2 * halfperiod/halfperiodnumber
 
+    period.delete(0,END)
+    period.insert(0,p)
 
 
 
@@ -129,10 +138,20 @@ label_3 = Label(window,
 label_3.pack()
 
 massmass = Entry(window,
-                 font=("arial", 50),
+                 font=("Arial", 50),
                  )
 massmass.pack()
 
+label_4 = Label(window,
+                text="period:",
+                font=("Impact",10)
+                )
+label_4.pack()
+
+period = Entry(window,
+                 font=("arial", 50),
+                 )
+period.pack()
 
 run_button = Button(window, 
                     text= "Run", 
