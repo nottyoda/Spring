@@ -11,15 +11,15 @@ ls = 0
 rm = 0
 mass = 0
 #functions
-def springpos():
+def springpos(): # outputs array
     springattchvec= np.array([ls+rm,0])
     return springattchvec
 
-def position(theta):
+def position(theta): # outputs array
     posvec= np.array([rm * np.cos(theta), rm * np.sin(theta)])
     return posvec 
 
-def force(theta):
+def force(theta): # outputs array
     stretchvec = position(theta) - springpos()
     stretchveclen = np.sqrt(strechvec.dot(stretchvec))
     extension = stretchveclen - ls
@@ -27,8 +27,9 @@ def force(theta):
     return forcevec
 
 
-def alpha(theta, forcevec, mass):
-    forcevec[0]
+def alpha(theta, mass):
+    alpha = force(theta).dot(np.array([-1*np.sin(theta),np.cos(theta)])) * (1/(rm)) *(1/(mass))
+    return alpha 
 
 
 
