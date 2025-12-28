@@ -78,15 +78,6 @@ def run():
 
 
 
-
-
-
-
-
-
-
-
-
     #checking variables
     lengthspring.delete(0,END)
     radiusmass.delete(0,END)
