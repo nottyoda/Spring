@@ -77,6 +77,7 @@ def run():
     if alpha(theta_equil, ls, rm, mass) != 0:
         theta_equil = (theta_equil + theta_equil_past)/2
     
+    print(theta_equil)
 
 
     # input code for checking when a half cycle completes
