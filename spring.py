@@ -65,11 +65,25 @@ def run():
     ax.set_ylabel('θ')
     ax.grid(True)
 
-    # input code for checking when a half cycle completes, use (theta[i] - theta0)(theta[i+1] - theta[0]) \leq 0
+    #finding equilibrium, please change alg later, use liner interpolation if possible
+    theta_equil = 0 
+    theta_equil_past = 0 
+    
+    while alpha(theta_equil, ls, rm, mass)*alpha(theta_equil_past, ls, rm, mass) > 0:
+        theta_equil_past = theta_equil
+        theta_equil = theta_equil + 0.000001 
+
+
+    if alpha(theta_equil, ls, rm, mass) != 0:
+        theta_equil = (theta_equil + theta_equil_past)/2
+    
+
+
+    # input code for checking when a half cycle completes
     halfperiod = 0 #the halfperiod 
     halfperiodnumber = 0 
     for i in range(0,len(t)-1):
-        if (theta[i] - theta0)*(theta[i+1] - theta[0]) <= 0:
+        if (theta[i] - theta_equil)*(theta[i+1] - theta_equil) <= 0:
             halfperiod = halfperiod + t[i]
             halfperiodnumber = halfperiodnumber + 1
     p = 2 * halfperiod/halfperiodnumber
