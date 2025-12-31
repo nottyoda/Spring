@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import ( FigureCanvasTkAgg, NavigationToolbar2Tk)
 from tkinter import *
 
-#the spring constant
-spring_constant = 10
+
 
 #the code using symplectic euler
 
@@ -29,6 +28,7 @@ def run():
         stretchvec = springpos(ls, rm) - position(theta,rm) 
         stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
         extension = stretchveclen - ls
+        spring_constant = 10
         forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
         return forcevec
 
