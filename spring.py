@@ -17,7 +17,8 @@ def run():
 
     #functions
     def springpos(ls, rm): # outputs array
-        springattchvec= np.array([ls+rm,0])
+        #springattchvec= np.array([ls+rm,0]) #not fixed pos
+        springattchvec= np.array([1+rm,0]) #fixed pos
         return springattchvec
 
     def position(theta, rm): # outputs array
@@ -28,7 +29,7 @@ def run():
         stretchvec = springpos(ls, rm) - position(theta,rm) 
         stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
         extension = stretchveclen - ls
-        spring_constant = 10
+        spring_constant = 1
         forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
         return forcevec
 
@@ -46,6 +47,8 @@ def run():
     t = np.arange(0,tmax+h,h) #time
     theta0 = 0.2 # initial condition
     v = 0 # initial velocity 
+
+    print(alpha(theta0, ls, rm, mass))
 
     theta = np.zeros(len(t)) # logging angular position
     theta[0] = theta0 # setting the first term\
@@ -69,15 +72,16 @@ def run():
     theta_equil = 0 
     theta_equil_past = 0 
     
-    while alpha(theta_equil, ls, rm, mass)*alpha(theta_equil_past, ls, rm, mass) > 0:
+    while (alpha(theta_equil, ls, rm, mass)* alpha(theta_equil_past, ls, rm, mass) > 0 or alpha(theta_equil+0.00001,ls,rm,mass) >= 0):
         theta_equil_past = theta_equil
-        theta_equil = theta_equil + 0.000001 
+        theta_equil = theta_equil + 0.00001 #please implement binary search
 
 
     if alpha(theta_equil, ls, rm, mass) != 0:
         theta_equil = (theta_equil + theta_equil_past)/2
     
     print(theta_equil)
+    print(alpha(theta_equil, ls, rm, mass)) 
 
 
     # input code for checking when a half cycle completes
