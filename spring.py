@@ -1,3 +1,4 @@
+import statistics as stat
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import ( FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -43,7 +44,7 @@ def run():
 
     #code goes here
     h = 0.001 #stepsize
-    tmax = 100 # max time
+    tmax = 20 # max time
     t = np.arange(0,tmax+h,h) #time
     theta0 = 0.2 # initial condition
     v = 0 # initial velocity 
@@ -84,21 +85,20 @@ def run():
 
 
     # input code for checking when a half cycle completes
-    halfperiod = 0 #the halfperiod 
-    halfperiodnumber = 0 
+    halfperiodnode = []
+    halfperiod =[] # the halfperiod list
     for i in range(0,len(t)-1):
         if (theta[i] - theta_equil)*(theta[i+1] - theta_equil) <= 0:
-            halfperiod = halfperiod + t[i]
-            halfperiodnumber = halfperiodnumber + 1
+            halfperiodnode.append(t[i])
 
-    print(halfperiodnumber)
-    print(halfperiod)
+    for i in range(1, len(halfperiodnode)):
+        halfperiod.append(halfperiodnode[i]-halfperiodnode[i-1])
 
-    p = 2 * halfperiod/halfperiodnumber
-
+    p = 2 * stat.mean(halfperiod)
     period.delete(0,END) #displaying period 
     period.insert(0,p)
 
+    print(halfperiod)
 
 
     #checking variables
