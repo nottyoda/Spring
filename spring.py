@@ -18,8 +18,8 @@ def run():
 
     #functions
     def springpos(ls, rm): # outputs array
-        springattchvec= np.array([ls+rm,0]) #not fixed pos
-        #springattchvec= np.array([1+rm,0]) #fixed pos
+        #springattchvec= np.array([ls+rm,0]) #not fixed pos
+        springattchvec= np.array([1+rm,0]) #fixed pos
         return springattchvec
 
     def position(theta, rm): # outputs array
@@ -40,13 +40,26 @@ def run():
         return alpha 
 
 
+    #finding equilibrium, please change alg later, use liner interpolation if possible
+    theta_equil = 0 
+    theta_equil_past = 0 
+    
+    while (alpha(theta_equil, ls, rm, mass)* alpha(theta_equil_past, ls, rm, mass) > 0 or alpha(theta_equil+0.00001,ls,rm,mass) >= 0):
+        theta_equil_past = theta_equil
+        theta_equil = theta_equil + 0.00001 #please implement binary search
 
 
-    #code goes here
+    if alpha(theta_equil, ls, rm, mass) != 0:
+        theta_equil = (theta_equil + theta_equil_past)/2
+    
+    print("theta_equil is", theta_equil)
+    print(alpha(theta_equil, ls, rm, mass)) 
+
+
     h = 0.001 #stepsize
-    tmax = 20 # max time
+    tmax = 100 # max time
     t = np.arange(0,tmax+h,h) #time
-    theta0 = 0.2 # initial condition
+    theta0 = 0.02+theta_equil # initial condition
     v = 0 # initial velocity 
 
     print(alpha(theta0, ls, rm, mass))
@@ -68,20 +81,6 @@ def run():
     ax.plot(t, theta)
     canvas.draw()
 
-    #finding equilibrium, please change alg later, use liner interpolation if possible
-    theta_equil = 0 
-    theta_equil_past = 0 
-    
-    while (alpha(theta_equil, ls, rm, mass)* alpha(theta_equil_past, ls, rm, mass) > 0 or alpha(theta_equil+0.00001,ls,rm,mass) >= 0):
-        theta_equil_past = theta_equil
-        theta_equil = theta_equil + 0.00001 #please implement binary search
-
-
-    if alpha(theta_equil, ls, rm, mass) != 0:
-        theta_equil = (theta_equil + theta_equil_past)/2
-    
-    print(theta_equil)
-    print(alpha(theta_equil, ls, rm, mass)) 
 
 
     # input code for checking when a half cycle completes
