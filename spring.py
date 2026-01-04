@@ -17,8 +17,8 @@ def run():
 
     #functions
     def springpos(ls, rm): # outputs array
-        #springattchvec= np.array([ls+rm,0]) #not fixed pos
-        springattchvec= np.array([1+rm,0]) #fixed pos
+        springattchvec= np.array([ls+rm,0]) #not fixed pos
+        #springattchvec= np.array([1+rm,0]) #fixed pos
         return springattchvec
 
     def position(theta, rm): # outputs array
@@ -29,7 +29,7 @@ def run():
         stretchvec = springpos(ls, rm) - position(theta,rm) 
         stretchveclen = np.sqrt(stretchvec.dot(stretchvec))
         extension = stretchveclen - ls
-        spring_constant = 1
+        spring_constant = 10
         forcevec = stretchvec * extension * (1/ stretchveclen) * spring_constant #can change
         return forcevec
 
@@ -42,8 +42,8 @@ def run():
 
 
     #code goes here
-    h = 0.01 #stepsize
-    tmax = 5 # max time
+    h = 0.001 #stepsize
+    tmax = 100 # max time
     t = np.arange(0,tmax+h,h) #time
     theta0 = 0.2 # initial condition
     v = 0 # initial velocity 
@@ -60,13 +60,12 @@ def run():
         #print(alpha(theta[i],ls, rm, mass))
     
     print(theta)
+    print(t)
 
     #showing plot
+    ax.clear()
     ax.plot(t, theta)
-    fig.suptitle('Angular displacement')
-    ax.set_xlabel('t')
-    ax.set_ylabel('θ')
-    ax.grid(True)
+    canvas.draw()
 
     #finding equilibrium, please change alg later, use liner interpolation if possible
     theta_equil = 0 
@@ -91,6 +90,10 @@ def run():
         if (theta[i] - theta_equil)*(theta[i+1] - theta_equil) <= 0:
             halfperiod = halfperiod + t[i]
             halfperiodnumber = halfperiodnumber + 1
+
+    print(halfperiodnumber)
+    print(halfperiod)
+
     p = 2 * halfperiod/halfperiodnumber
 
     period.delete(0,END) #displaying period 
@@ -186,6 +189,11 @@ run_button.pack()
 fig, ax = plt.subplots()
 canvas = FigureCanvasTkAgg(fig, master = window)
 canvas.get_tk_widget().pack()
+
+#the toolbar part
+toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar = False)
+toolbar.update()
+toolbar.pack()
 
 
 window.mainloop()
